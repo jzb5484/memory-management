@@ -7,7 +7,7 @@ EXECUTABLES=test1 test2 test3 test4 test5 test6 test7 test8
 
 all: main
 
-main: $(OBJFILES)
+main: $(OBJFILES) $(TESTFILES)
 	gcc -o test1 $(OBJFILES) input/test1.o $(LINKFLAGS)
 	gcc -o test2 $(OBJFILES) input/test2.o $(LINKFLAGS)
 	gcc -o test3 $(OBJFILES) input/test3.o $(LINKFLAGS)
