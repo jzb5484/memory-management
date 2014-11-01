@@ -1,5 +1,4 @@
-
-
+#include <stdint.h>
 #include <stdlib.h>
 
 void setup(int malloc_type, int mem_size, void* start_of_memory);
@@ -9,13 +8,15 @@ void my_free(void *ptr);
 void* (*mallocfunc)(int);
 void (*freefunc)(void*);
 
-static void* firstfit(int size);
-static void* bestfit(int size);
-static void* worstfit(int size);
+extern void hole_mem_setup(int malloc_type, uint64_t mem_size, void* start_of_memory);
+
+extern void* firstfit(int size);
+extern void* bestfit(int size);
+extern void* worstfit(int size);
 static void* buddysystem(int size);
 
 static void buddyfree(void* ptr);
-static void regfree(void* ptr);
+extern void regfree(void* ptr);
 
 struct hole {
 	void* location;
@@ -23,13 +24,7 @@ struct hole {
 	struct hole* next;
 };
 
-// The list of holes we maintain will be a linked list.
-static struct hole* head;
-
 void setup(int malloc_type, int mem_size, void* start_of_memory) {
-	head = malloc(sizeof(struct hole));
-	head->location = (void*) start_of_memory;
-	head->size = mem_size;
 	switch(malloc_type) {
 		case 0:
 		// first fit.
@@ -52,6 +47,8 @@ void setup(int malloc_type, int mem_size, void* start_of_memory) {
 		freefunc = buddyfree;
 		break;
 	}
+	if (0 <= malloc_type && malloc_type <= 2)
+		hole_mem_setup(malloc_type, (uint64_t) mem_size, start_of_memory);
 }
 
 
@@ -63,22 +60,11 @@ void my_free(void* ptr) {
 	(*freefunc)(ptr);
 }
 
-static void regfree(void* ptr) {
-
-}
 static void buddyfree(void* ptr) {
 
 }
 
-static void* firstfit(int size) {
-	return NULL;
-}
-static void* bestfit(int size) {
-	return NULL;
-}
-static void* worstfit(int size) {
-	return NULL;
-}
+
 static void* buddysystem(int size) {
 	return NULL;
 }
