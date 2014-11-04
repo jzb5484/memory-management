@@ -17,10 +17,6 @@ static struct hole* head;
 static void* mem_start;
 static uint64_t mem_finish;
 
-// A function which is currently disabled that shows color-coded output. It
-// needs a fairly large stack-size to work, so if you wish to use it, you have
-// to remove the #define statement following it, and increase the per-thread
-// stack size.
 #define DEBUG_LEVEL 0b11111111
 static void debug(int level, const char *fmt, ...) {
 	if (!(level & DEBUG_LEVEL))
