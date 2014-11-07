@@ -1,0 +1,11 @@
+# Test to make sure the buddy system recombines properly, and handles weird-sized input.
+init	3	20480
+alloc	10236
+alloc	5116
+alloc	5116
+free	1
+free	2
+free	3
+alloc	20476
+free	4
+term

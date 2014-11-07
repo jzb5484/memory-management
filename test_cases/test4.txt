@@ -1,0 +1,12 @@
+init	3	1048576
+alloc	102400
+alloc	102400
+alloc	204800
+alloc	204800
+free	1
+free	2
+alloc	102400
+free	5
+free	3
+alloc	512000
+term
