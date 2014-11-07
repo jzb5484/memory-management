@@ -2,7 +2,7 @@ CFLAGS=-Wno-pointer-to-int-cast -Wformat=0 -std=c99 -g -Iinput
 LINKFLAGS=-Wno-pointer-to-int-cast -lm -Iinput
 OBJFILES=my_memory.o hole-mem.o
 TESTFILES=input/test1.o input/test2.o input/test3.o input/test4.o input/test5.o input/test6.o input/test7.o input/test8.o main.o
-OUTPUT_FILES=test1_output.txt test2_output.txt test3_output.txt test4_output.txt test5_output.txt test6_output.txt test7_output.txt test8_output.txt 
+OUTPUT_FILES=test1_output.txt test2_output.txt test3_output.txt test4_output.txt test5_output.txt test6_output.txt test7_output.txt test8_output.txt test9_output.txt 
 EXECUTABLES=test1 test2 test3 test4 test5 test6 test7 test8
 
 all: main
@@ -37,6 +37,7 @@ test: main
 	./main <test_cases/test6.txt >test6_output.txt; diff test6_output.txt output/test6_output.txt || echo '\033[1;31mFailed on test 6 \033[00m'
 	./main <test_cases/test7.txt >test7_output.txt; diff test7_output.txt output/test7_output.txt || echo '\033[1;31mFailed on test 7 \033[00m'
 	./main <test_cases/test8.txt >test8_output.txt; diff test8_output.txt output/test8_output.txt || echo '\033[1;31mFailed on test 8 \033[00m'
+	./main <test_cases/test9.txt >test9_output.txt; diff test9_output.txt output/test9_output.txt || echo '\033[1;31mFailed on test 9 \033[00m'
 
 main2: $(OBJFILES) $(TESTFILES)
 
