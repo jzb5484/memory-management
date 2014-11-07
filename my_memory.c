@@ -142,7 +142,7 @@ static void* buddysystem(int size) {
         new_block += get_block_size(new_block);
 
         if(new_block >=  MEM + (MEM_SIZE << 10))
-            return -1;
+            return (void*) -1;
     }
 
     while(get_block_size(new_block) > size)

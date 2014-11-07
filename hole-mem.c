@@ -65,7 +65,14 @@ void add_hole(void* location, uint32_t size) {
 		trace = trace->next;
 	}
 	// the hole should be added to the end of the list.
-	if (trail->location + trail->size == location) {
+	if (trail == NULL) {
+		// The list is empty.
+		trace = malloc(sizeof(struct hole));
+		trace->location = location;
+		trace->size = size;
+		trace->next = NULL;
+		head = trace;
+	} else if (trail->location + trail->size == location) {
 		// merge with the final node.
 		trail->size += size;
 	} else {
