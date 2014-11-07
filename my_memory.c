@@ -117,11 +117,13 @@ static void buddyfree(void* ptr) {
     {
         clear_header(buddy);
         write_header(ptr, (size*2) >> 10, 0, LEFT);
+		buddyfree(ptr + sizeof(struct buddy_header));
     }
     else if (orientation == RIGHT && (buddy < MEM + (MEM_SIZE << 10)) && (size == buddy_size) && !buddy_allocated)
     {
         clear_header(ptr);
         write_header(buddy, (size*2) >> 10, 0, LEFT);
+		buddyfree(buddy + sizeof(struct buddy_header));
     }
     else
     {
