@@ -1,6 +1,6 @@
 CFLAGS=-Wno-pointer-to-int-cast -Wformat=0 -std=c99 -g -Iinput
 LINKFLAGS=-Wno-pointer-to-int-cast -lm -Iinput
-OBJFILES=my_memory.o hole-mem.o
+OBJFILES=my_memory.o
 TESTFILES=input/test1.o input/test2.o input/test3.o input/test4.o input/test5.o input/test6.o input/test7.o input/test8.o main.o
 OUTPUT_FILES=test1_output.txt test2_output.txt test3_output.txt test4_output.txt test5_output.txt test6_output.txt test7_output.txt test8_output.txt test9_output.txt 
 EXECUTABLES=test1 test2 test3 test4 test5 test6 test7 test8
