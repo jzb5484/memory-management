@@ -1,0 +1,15 @@
+Contributions:
+Jackson Burlew: first fit, best fit, worst fit, and corresponding auxiliary functions.
+Seamus Hayes: buddy system and its corresponding auxiliary functions.
+
+First-fit, Best-fit, Worst-fit:
+	For these three systems, a linked list of holes is maintained. They contain the start location of the hole and its size. When allocating, we loop through the holes and find one of the appropriate size. For first-fit, we add the memory segment at the first valid location. For best-fit and worst-fit, we keep pointers denoting the preferred location to put the memory segment and add the segment at the end of the loop.
+	On freeing, we add the hole to the list in the proper order. If the hole is adjacent to another hole (or two), we can combine them.
+	Given that there are n holes in the system, allocation requires O(n) time. Likewise, freeing requires O(n) time.
+Buddy System:
+	The key to the buddy-system implementation is its header.  The 4-byte header includes three fields: size (16 bits), allocated (8 bits), and orientation (8 bits).  The size field denotes the size of the block, the allocated field tells if the block is allocated, and the orientation field says if the block is the left or right buddy. Using this information, malloc calls scan the memory from low to high address for blocks of the appropriate size, splitting blocks that are too big and allocating in the lower address block.  Free calls simply rewrite/remove headers, using the blocks orientation to merge buddies.  I chose this implementation as you only need the 4-byte header for bookkeeping.
+	The header includes a 16 bit integer because we know the minimum memory segment size is 1K, so by using shift operations, we can fit numbers which represent up to 64M in this data slot. Since we only need 1M, we have more than enough precision. If we need more memory, the header struct could easily be changed to define the bit width for the allocated and orientation field to 1 bit wide, leaving 30 bits for the integer (which can represent up to 1T after a shift operation).
+	Given that the total size of the memory is N and the smallest possible size is n, freeing can be done in O(log2(N/n)) worst-case time, and allocating can be done in O(N/n) worst-case time (worst case would be all of the memory is allocated at size 1K and there is no space to add this new term).
+
+For buddy-system, we rely on the total memory size being less than 64M.
+For the 'linked list schemes,' we rely on the memory size being less than 4G.

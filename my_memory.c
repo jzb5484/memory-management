@@ -327,6 +327,12 @@ static void buddyfree(void* ptr) {
     int allocated = is_allocated(ptr);
     int orientation = get_block_orientation(ptr);
 
+    if (ptr == MEM && size >> 10 == MEM_SIZE) {
+        // base case: we do not need to recurse (or even find the buddy).
+        write_header(ptr, (size*2)>>10, 0, LEFT);
+        return;
+    }
+
     void *buddy;
     if(orientation == LEFT)
     {
@@ -384,7 +390,7 @@ static void* buddysystem(int size) {
 
 int round_nearest_power_two(int x)
 {
-    int nearest_two = 1;
+    int nearest_two = 1024;
 
     while(nearest_two < x)
     {
