@@ -7,7 +7,7 @@ EXECUTABLES=main
 all: $(EXECUTABLES)
 
 main: $(OBJFILES) main.o
-	gcc -o main main.o $(OBJFILES) $(LINKFLAGS)
+	gcc -o main $(OBJFILES) $(LINKFLAGS)
 
 test: main
 	./main <test_cases/test1.txt >test1_output.txt; diff test1_output.txt output/test1_output.txt || echo '\033[1;31mFailed on test 1 \033[00m'
