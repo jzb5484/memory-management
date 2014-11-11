@@ -55,6 +55,7 @@ int get_block_orientation(void *header);
 void *split_block(void *header);
 void write_header(void *location, int size, int allocated, int orientation);
 void clear_header(void *location);
+int left_or_right (void *location);
 
 
 void setup(int malloc_type, int mem_size, void* start_of_memory) {
@@ -349,13 +350,13 @@ static void buddyfree(void* ptr) {
     if((orientation == LEFT) && (buddy < MEM + (MEM_SIZE << 10)) && (size == buddy_size) && !buddy_allocated)
     {
         clear_header(buddy);
-        write_header(ptr, (size*2) >> 10, 0, LEFT);
+        write_header(ptr, (size*2) >> 10, 0, left_or_right(ptr));
 		buddyfree(ptr + sizeof(struct buddy_header));
     }
     else if (orientation == RIGHT && (buddy < MEM + (MEM_SIZE << 10)) && (size == buddy_size) && !buddy_allocated)
     {
         clear_header(ptr);
-        write_header(buddy, (size*2) >> 10, 0, RIGHT);
+        write_header(buddy, (size*2) >> 10, 0, left_or_right(buddy));
 		buddyfree(buddy + sizeof(struct buddy_header));
     }
     else
@@ -442,5 +443,21 @@ void write_header (void *location, int size, int allocated, int orientation)
 void clear_header (void *location)
 {
     memset(location, 0, sizeof(struct buddy_header));
+}
+
+int left_or_right (void *location)
+{
+	int size = get_block_size(location);
+
+	void *it = MEM;
+	int count = 0;
+
+	while(it != location)
+	{
+		it += size;
+		count++;
+	}
+
+	return count%2;
 }
 
