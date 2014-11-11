@@ -447,12 +447,12 @@ void clear_header (void *location)
 
 int left_or_right (void *location)
 {
-	int size = get_block_size(location);
+	int size = 2*get_block_size(location);
 
 	void *it = MEM;
 	int count = 0;
 
-	while(it != location)
+	while(it != location && it < MEM + (MEM_SIZE << 10))
 	{
 		it += size;
 		count++;
