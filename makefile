@@ -1,5 +1,5 @@
 CFLAGS=-Wno-pointer-to-int-cast -Wformat=0 -g
-LINKFLAGS=-Wno-pointer-to-int-cast
+LINKFLAGS=
 OBJFILES=my_memory.o main.o
 OUTPUT_FILES=test1_output.txt test2_output.txt test3_output.txt test4_output.txt test5_output.txt test6_output.txt test7_output.txt test8_output.txt test9_output.txt test10_output.txt
 EXECUTABLES=main
@@ -24,9 +24,9 @@ test: main
 clean:
 	rm -f $(OBJFILES) $(OUTPUT_FILES) $(EXECUTABLES)
 
-%.o: %.c
+%.o: %.c memalloc.h
 	gcc -c $(CFLAGS) -o $@ $<
 
 package:
-	tar -cvf burlew-hayes-minimal.tgz proj-description.txt my_memory.c memalloc.h
-	tar -cvf burlew-hayes-complete.tgz test_cases/* output/* main.c makefile memalloc.h my_memory.c proj-description.txt
+	tar -cvzf burlew-hayes-minimal.tgz proj-description.txt my_memory.c memalloc.h
+	tar -cvzf burlew-hayes-complete.tgz test_cases/* output/* main.c makefile memalloc.h my_memory.c proj-description.txt
