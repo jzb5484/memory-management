@@ -11,8 +11,8 @@ void setup(int malloc_type, int mem_size, void* start_of_memory);
 void *my_malloc(int size);
 void my_free(void *ptr);
 
-void* (*mallocfunc)(int);
-void (*freefunc)(void*);
+static void* (*mallocfunc)(int);
+static void (*freefunc)(void*);
 
 static void* firstfit(int size);
 static void* bestfit(int size);
@@ -40,22 +40,22 @@ static struct hole* head;
 static void* mem_start;
 static uint64_t mem_finish;
 
-void* MEM;
-int MEM_SIZE;
+static void* MEM;
+static int MEM_SIZE;
 
 // Auxiliary functions for first-fit, best-fit, worst-fit.
 static void add_hole(void* location, uint32_t size);
 static void hole_mem_setup(int malloc_type, uint64_t mem_size, void* start_of_memory);
 
 // Auxiliary functions for buddy system
-int round_nearest_power_two(int x);
-int get_block_size(void *header);
-int is_allocated(void *header);
-int get_block_orientation(void *header);
-void *split_block(void *header);
-void write_header(void *location, int size, int allocated, int orientation);
-void clear_header(void *location);
-int left_or_right (void *location);
+static int round_nearest_power_two(int x);
+static int get_block_size(void *header);
+static int is_allocated(void *header);
+static int get_block_orientation(void *header);
+static void *split_block(void *header);
+static void write_header(void *location, int size, int allocated, int orientation);
+static void clear_header(void *location);
+static int left_or_right (void *location);
 
 
 void setup(int malloc_type, int mem_size, void* start_of_memory) {
@@ -389,7 +389,7 @@ static void* buddysystem(int size) {
     return new_block + sizeof(struct buddy_header);
 }
 
-int round_nearest_power_two(int x)
+static int round_nearest_power_two(int x)
 {
     int nearest_two = 1024;
 
@@ -401,22 +401,22 @@ int round_nearest_power_two(int x)
     return nearest_two;
 }
 
-int get_block_size(void* header)
+static int get_block_size(void* header)
 {
     return (((struct buddy_header*) header)->size) << 10;
 }
 
-int is_allocated(void* header)
+static int is_allocated(void* header)
 {
     return ((struct buddy_header*) header)->allocated;
 }
 
-int get_block_orientation(void* header)
+static int get_block_orientation(void* header)
 {
     return ((struct buddy_header*) header)->orientation;
 }
 
-void *split_block(void* header)
+static void *split_block(void* header)
 {
     int size = get_block_size(header);
 
@@ -430,7 +430,7 @@ void *split_block(void* header)
     return header;
 }
 
-void write_header (void *location, int size, int allocated, int orientation)
+static void write_header (void *location, int size, int allocated, int orientation)
 {
     struct buddy_header header;
     header.size = size;
@@ -440,12 +440,12 @@ void write_header (void *location, int size, int allocated, int orientation)
     memcpy(location, (void *) &(header), sizeof(header));
 }
 
-void clear_header (void *location)
+static void clear_header (void *location)
 {
     memset(location, 0, sizeof(struct buddy_header));
 }
 
-int left_or_right (void *location)
+static int left_or_right (void *location)
 {
 	int size = 2*get_block_size(location);
 
