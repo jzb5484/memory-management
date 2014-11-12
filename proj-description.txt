@@ -1,8 +1,5 @@
 Compilation:
 To make this project, no special compiler options are needed (though you may get pointer-to-int conversion warnings).
-Run "$ make" to get the my_memory.o object file as well as an executable which can be used to test a few cases.
-Running "$ make test" will test the program against the 8 inputs you provided, as well as 2 which were chosen specifically to break certain aspects of the buddy system (recombining holes and choosing the correct 'orientation').
-
 
 
 Contributions:
